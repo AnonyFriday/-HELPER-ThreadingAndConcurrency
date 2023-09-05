@@ -23,16 +23,18 @@ public class ThreadExtendClass extends Thread {
      */
     @Override
     public void run() {
-        int count = 1;
+        int count = 0;
         try {
-            for (int i = 4; i > 0; i--) {
-                System.out.println(this.getName() + ", " + i);
+            for (;;) {
+                System.out.println(this.getName() + ", " + count++);
 
                 // Let the thread sleep for a while
                 Thread.sleep(50);
             }
         } catch (InterruptedException e) {
-            System.out.println(this.getName() + " exiting.");
+            System.out.println(this.getName() + " interrupted.");
         }
+        System.out.println(this.getName() + " exiting.");
     }
+
 }

@@ -8,7 +8,7 @@ package threadtesting;
  *
  * @author duyvu
  */
-public class ThreadDemo1 {
+public class ThreadDemoStart {
 
     public static void main(String[] args) {
 
