@@ -39,7 +39,7 @@ public class ThreadDemoDaemon {
 
         Thread.sleep(2000);
         
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 1; i++) {
             System.out.println("MAINAAAAAAAAAAAAA: " + i);
         }
             
