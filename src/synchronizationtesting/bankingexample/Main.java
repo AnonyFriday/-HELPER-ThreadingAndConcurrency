@@ -15,6 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // Attributes
         MyBank myBank = new MyBank(100);
         List<WithdrawThread> withDrawnThreads = new ArrayList<>();
 
