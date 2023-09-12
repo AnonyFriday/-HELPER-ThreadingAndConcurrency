@@ -19,20 +19,30 @@ class MyData {
 
     // Constructor
     public MyData(String name) {
-	this.name = name;
+        this.name = name;
     }
-    
+
+    /**
+     * Displaying each character with in the passed string
+     *
+     * <br>A demonstration of accessing the shared object from multithreading
+     * <br>This is a critical region (a block of code that make deadlock)
+     *
+     * @throws InterruptedException
+     */
     public void display() throws InterruptedException {
-	for (char el : this.name.toCharArray()) {
-	    Thread.sleep(1001);
-	    System.out.print(el);
-	}
-	
+
+        synchronized (this) {
+            for (char el : this.name.toCharArray()) {
+            Thread.sleep(1001);
+                System.out.print(el);
+            }
+        }
     }
 }
 
 public class CustomThread extends Thread {
-    
+
     private String threadName;
     private MyData data;
 
@@ -42,9 +52,10 @@ public class CustomThread extends Thread {
      * @param data
      * @param threadName
      */
-    public CustomThread(MyData data, String threadName) {
-	this.threadName = threadName;
-	this.data = data;
+    public CustomThread(MyData data,
+                        String threadName) {
+        this.threadName = threadName;
+        this.data = data;
     }
 
     /**
@@ -53,12 +64,12 @@ public class CustomThread extends Thread {
      */
     @Override
     public void run() {
-	System.out.print("Thread " + this.threadName + ": ");
-	try {
-	    data.display();
-	} catch (InterruptedException ex) {
-	    Logger.getLogger(CustomThread.class.getName()).log(Level.SEVERE, null, ex);
-	}
-	System.out.println("\n");
+        System.out.print("Thread " + this.threadName + ": ");
+        try {
+            data.display(); // 2 pointer accessing the same object DATA and call the method display() simultaneously
+        } catch (InterruptedException ex) {
+            Logger.getLogger(CustomThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("\n");
     }
 }
