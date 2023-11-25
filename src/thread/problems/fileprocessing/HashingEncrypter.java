@@ -30,11 +30,13 @@ public class HashingEncrypter {
      * @param input:         the input byte array
      * @return the byte array after digesting
      */
-    public static byte[] getDigest(String algorithmName,
-                                   byte[] input) {
+    private static byte[] getDigest(String algorithmName,
+                                    byte[] input) {
         try {
-            final MessageDigest md = MessageDigest.getInstance(algorithmName);
-            byte[] result = md.digest(input);
+
+            // Create hashing encrypt object
+            final MessageDigest digest = MessageDigest.getInstance(algorithmName);
+            byte[] result = digest.digest(input);
             return result;
 
         } catch (NoSuchAlgorithmException ex) {
@@ -71,5 +73,28 @@ public class HashingEncrypter {
 
         // convert encrypting bytes ro hexadecimal string
         return bytesToHex(encryptingBytes);
+    }
+
+    /**
+     * Output the hashed string representation
+     *
+     * @param msg:  type of hashing hashing function (e.g. SHA256, etc.)
+     * @param data:
+     */
+    public static void output(String msg,
+                              String data) {
+        System.out.println(msg + ": " + data + "\nLen=" + data.length());
+    }
+
+    public static void main(String[] args) {
+
+        // output source
+        String userPwd = "VU KIM DUY";
+        int len = userPwd.length();
+        output("Source", userPwd);
+
+        // output hashed source
+        String sha256Str = HashingEncrypter.getHexaDigest(HashingEncrypter.SHA_256, userPwd);
+        output("SHA256", sha256Str);
     }
 }
