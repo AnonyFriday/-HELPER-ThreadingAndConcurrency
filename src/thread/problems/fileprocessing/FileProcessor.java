@@ -8,8 +8,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +26,7 @@ public class FileProcessor implements Runnable {
     // = Fields
     // ======================================
     private final File file;
-    private final String OUTPUT_PATH = "./src/thread/problems/fileprocessing/output";
+    private final String OUTPUT_PATH = "./src/thread/problems/fileprocessing/output/";
 
     // ======================================
     // = Constructor
@@ -46,7 +49,7 @@ public class FileProcessor implements Runnable {
             // Hashing each line of the file 
             // For each line, write to the output file and append the \n at each line
             Files.lines(Path.of(file.getCanonicalPath()))
-                    .map(this::hashFile)
+                    .map(line -> HashingEncrypter.getHexaDigest(HashingEncrypter.SHA_256, line))
                     .forEach(line -> {
                         try {
                             writer.write(line + '\n');
@@ -55,13 +58,10 @@ public class FileProcessor implements Runnable {
                         }
                     });
 
+            // Closing the writer
             writer.close();
         } catch (IOException ex) {
             Logger.getLogger(FileProcessor.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public String hashFile(String line) {
-        return null;
     }
 }

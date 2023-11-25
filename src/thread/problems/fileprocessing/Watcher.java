@@ -35,9 +35,12 @@ class Watcher implements Runnable {
     // ======================================
     // = Methods
     // ======================================
+    /**
+     * Create a thread to scan a folder 'resources' for every 68s
+     */
     @Override
     public void run() {
-        File dir = new File("./src/thread/problems/fileprocessing/resources");
+        File dir = new File(urlFolder);
 
         while (true) {
             if (dir.listFiles().length != 0) {
@@ -46,12 +49,12 @@ class Watcher implements Runnable {
                 // Write a new file into the directory
                 Arrays
                         .stream(dir.listFiles())
-                        .forEach(file -> new Thread(new FileProcessor(file)));
+                        .forEach(file -> new Thread(new FileProcessor(file)).start());
             }
-        }
 
-        // Sleeping after scanning
-        sleep();
+            // Sleeping after scanning
+             sleep();
+        }
     }
 
     /**
@@ -63,9 +66,5 @@ class Watcher implements Runnable {
         } catch (InterruptedException ex) {
             Logger.getLogger(Watcher.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void hashContent(File file) {
-
     }
 }
