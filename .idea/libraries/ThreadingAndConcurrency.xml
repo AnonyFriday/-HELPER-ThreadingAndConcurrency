@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ThreadingAndConcurrency">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/ThreadingAndConcurrency.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

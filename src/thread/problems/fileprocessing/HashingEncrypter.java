@@ -33,9 +33,10 @@ public class HashingEncrypter {
     private static byte[] getDigest(String algorithmName,
                                     byte[] input) {
         try {
-
             // Create hashing encrypt object
             final MessageDigest digest = MessageDigest.getInstance(algorithmName);
+
+            // Perform hashing on the byte-based array
             byte[] result = digest.digest(input);
             return result;
 
@@ -46,7 +47,7 @@ public class HashingEncrypter {
     }
 
     /**
-     * Convert a byte array to a hexadecimal string
+     * Convert a byte array to a hexadecimal array and to string
      */
     private static String bytesToHex(byte[] bytes) {
 
@@ -66,10 +67,10 @@ public class HashingEncrypter {
     public static String getHexaDigest(String algorithmName,
                                        String src) {
         // convert Unicode source string to bytes
-        byte[] inputByte = src.getBytes(UTF_8);
+        byte[] srcBytes = src.getBytes(UTF_8);
 
         // create encrypting bytes from input bytes
-        byte[] encryptingBytes = getDigest(algorithmName, inputByte);
+        byte[] encryptingBytes = getDigest(algorithmName, srcBytes);
 
         // convert encrypting bytes ro hexadecimal string
         return bytesToHex(encryptingBytes);

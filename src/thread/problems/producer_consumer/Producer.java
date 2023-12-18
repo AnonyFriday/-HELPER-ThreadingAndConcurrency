@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package problems.producer_consumer;
+package thread.problems.producer_consumer;
 
 import static java.lang.Thread.sleep;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author duyvu
  */
 public class Producer extends Thread {
@@ -25,15 +25,16 @@ public class Producer extends Thread {
 
     @Override
     public void run() {
+        // automatically generete product at the random time
         int i = 0;
         while (true) {
             try {
                 if (buffer.getCapacity() > buffer.getSize()) {
                     buffer.addProducts(i++, this.id);
-                    sleep((long) (Math.random() * 100));
+                    Thread.sleep((long) (Math.random() * 1000));
                 }
             } catch (InterruptedException ex) {
-                Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+                ex.getStackTrace();
             }
         }
 
