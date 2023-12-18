@@ -17,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author duyvu
  */
 public class FileProcessor implements Runnable {
@@ -38,6 +37,7 @@ public class FileProcessor implements Runnable {
     // ======================================
     // = Methods
     // ======================================
+
     /**
      * A thread handling hashing each line of the file and write to the output file
      */
@@ -48,20 +48,25 @@ public class FileProcessor implements Runnable {
 
             // Hashing each line of the file 
             // For each line, write to the output file and append the \n at each line
-            Files.lines(Path.of(file.getCanonicalPath()))
+            Files.lines(Path.of(file.getCanonicalPath()), StandardCharsets.UTF_8)
                     .map(line -> HashingEncrypter.getHexaDigest(HashingEncrypter.SHA_256, line))
                     .forEach(line -> {
                         try {
                             writer.write(line + '\n');
-                        } catch (IOException ex) {
-                            Logger.getLogger(FileProcessor.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
                     });
 
             // Closing the writer
             writer.close();
-        } catch (IOException ex) {
+        } catch (
+                IOException ex) {
             Logger.getLogger(FileProcessor.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        System.out.println(Thread
+                .currentThread()
+                .getName() + " -> processed file: " + file.getName());
     }
 }

@@ -20,8 +20,13 @@ import java.util.logging.Logger;
  */
 public class Main {
 
+    /**
+     * Main function to execute the thread Watcher on resoureces folder
+     *
+     * @param args
+     */
     public static void main(String[] args) {
-        String urlFolder = "./src/thread/problems/fileprocessing/resources";
+        final String urlFolder = "./src/thread/problems/fileprocessing/resources";
         new Thread(new Watcher(urlFolder)).start();
     }
 }

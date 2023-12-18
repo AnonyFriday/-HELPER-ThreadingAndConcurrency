@@ -4,15 +4,21 @@
  */
 package thread.problems.fileprocessing.exceptions;
 
+import java.util.logging.Logger;
+
 /**
+ * JVM will query the thread for its UncaughExceptionHandler
+ * before terminating due to an uncaught exception
  *
  * @author duyvu
  */
 public class LineEmptyException implements Thread.UncaughtExceptionHandler {
 
+    private static Logger LOGGER = Logger.getLogger(String.valueOf(LineEmptyException.class));
+
     @Override
     public void uncaughtException(Thread t,
                                   Throwable e) {
-        System.out.println("Exception handled: " + e.getMessage() + "at thread: " + t.getName());
+        LOGGER.info(e.getMessage());
     }
 }

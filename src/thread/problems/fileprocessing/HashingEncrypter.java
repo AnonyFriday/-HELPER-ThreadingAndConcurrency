@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author duyvu
  */
 public class HashingEncrypter {
@@ -35,8 +34,6 @@ public class HashingEncrypter {
         try {
             // Create hashing encrypt object
             final MessageDigest digest = MessageDigest.getInstance(algorithmName);
-
-            // Perform hashing on the byte-based array
             byte[] result = digest.digest(input);
             return result;
 
@@ -66,6 +63,11 @@ public class HashingEncrypter {
      */
     public static String getHexaDigest(String algorithmName,
                                        String src) {
+        // handling the emtpy src
+        if (src.isBlank()) {
+            throw new RuntimeException("The line is empty, hashing cannot be done.");
+        }
+
         // convert Unicode source string to bytes
         byte[] srcBytes = src.getBytes(UTF_8);
 
