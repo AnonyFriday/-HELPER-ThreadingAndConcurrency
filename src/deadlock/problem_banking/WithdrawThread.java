@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package deadlocktesting;
+package deadlock.problem_banking;
 
 /**
  *
@@ -18,10 +18,11 @@ public class WithdrawThread extends Thread {
 	this.threadName = threadName;
     }
 
+    // A thread will run the withdrawn money 10 times independenly 
     @Override
     public void run() {
-	for (int i = 0; i < 10; i++) {
-	    myBank.withDraw(200, threadName);
+	for (int i = 0; i < 5; i++) {
+	    myBank.withDraw(20, threadName);
 	}
     }
 }

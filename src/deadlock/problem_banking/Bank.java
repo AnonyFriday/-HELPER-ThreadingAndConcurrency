@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package deadlocktesting;
+package deadlock.problem_banking;
 
 /**
  *
@@ -30,9 +30,10 @@ public class Bank {
 	this.money = money;
     }
 
-    public synchronized void withDraw(int money, String threadName) {
+    // A critical region ( a block of code being executed from multiple thread)
+    public void withDraw(int money, String threadName) {
 	if (money <= this.money) {
-	    System.out.println("Withdrawn: " + money + ">>" + threadName);
+	    System.out.println("Withdrawn: " + money + ">> " + threadName);
 	    this.money -= money;
 	} else {
 	    System.out.println("The withdrawn has been exceeding the current balance.");
