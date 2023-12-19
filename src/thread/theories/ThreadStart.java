@@ -2,41 +2,76 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package threadtesting;
+package thread.theories;
 
 /**
  *
  * @author duyvu
  */
-public class ThreadDemoStart {
+class ThreadDemo2 extends Thread {
+
+    @Override
+    public void run() {
+	for (int i = 0; i < 100; i++) {
+	    System.out.println("This thread extends Thread class");
+	}
+    }
+}
+
+public class ThreadStart {
 
     public static void main(String[] args) {
 
-        // Background Thread 1
-        Thread t1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 1000; i++) {
-                    System.out.println("Thread 1: " + i);
-                }
-            }
-        });
-        t1.start();
+	/**
+	 * Thread passing Runnable functional Interface through the constructor
+	 */
+	Thread t1 = new Thread(new Runnable() {
+	    @Override
+	    public void run() {
+		for (int i = 0; i < 1000; i++) {
+		    System.out.println("a");
+		}
+	    }
+	});
+	t1.start();
 
-        // Main thread
-        for (int i = 0; i < 1000; i++) {
-            System.out.println("MAIN THREAD: " + i);
-        }
+	// Main thread
+	for (int i = 0; i < 1000; i++) {
+	    System.out.println("MAIN THREAD: " + i);
+	}
 
-        // Background Thread 2
-        Thread t2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 1000; i++) {
-                    System.out.println("Thread 2: " + i);
-                }
-            }
-        });
-        t2.start();
+	/**
+	 * Create seperate Runnable Object and pass it through the Thread Contructor
+	 */
+	Runnable runnable = new Runnable() {
+	    @Override
+	    public void run() {
+		String threadName = Thread.currentThread().getName();
+		System.out.println(threadName + " running");
+	    }
+	};
+
+	Thread t2 = new Thread(runnable);
+
+	/**
+	 * This class extends ad thread and override the run() method
+	 */
+	ThreadDemo2 threadDemo2 = new ThreadDemo2();
+
+	/**
+	 * This thread does not have reference but still having an instance of it
+	 */
+	new Thread(new Runnable() {
+	    @Override
+	    public void run() {
+		for (int i = 0; i < 100; i++) {
+		    System.out.println("No reference has been created");
+		}
+	    }
+	}).start();
+
+	threadDemo2.start();
+	t1.start();
+	t2.start();
     }
 }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package threadtest;
+package thread.theories;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +19,7 @@ class ThreadRunnable implements Runnable {
     public ThreadRunnable(ThreadClass t1) {
         this.t1 = t1;
     }
-    
+
     @Override
     public void run() {
         try {
@@ -29,7 +29,7 @@ class ThreadRunnable implements Runnable {
             // Provide only 500 ms to execute the t1, after that join will back the control to t2
             // both t1 and t2 will run independently after 500ms
             t1.join(500);
-            
+
             for (int i = 0; i < 10; i++) {
                 try {
                     System.out.println("Thread TWO >> " + i);
@@ -74,14 +74,14 @@ class ThreadClass extends Thread {
  * @author duyvu
  */
 public class ThreadJoin {
-    
+
     public static void main(String[] args) {
         ThreadClass t1 = new ThreadClass();
         Thread t2 = new Thread(new ThreadRunnable(t1));
         t2.setName("Thread Two");
-        
+
         t2.start();
         t1.start();
-        
+
     }
 }

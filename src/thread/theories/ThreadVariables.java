@@ -8,11 +8,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The scope of this file is to demonstrate handling exception
  *
  * @author duyvu
  */
-public class ThreadDaemon {
+public class ThreadVariables {
 
     /**
      * Create the custom thread implementing the Runnable interface
