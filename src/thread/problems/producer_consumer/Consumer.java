@@ -29,10 +29,7 @@ public class Consumer extends Thread {
         // Automatically take the product from the buffer continuously
         while (true) {
             try {
-                if (buffer.getSize() > 0) {
-                    buffer.removeProduct(id);
-                    Thread.sleep((long) (Math.random() * 1000));
-                }
+                buffer.removeProduct(id);
             } catch (InterruptedException ex) {
                 ex.getStackTrace();
             }

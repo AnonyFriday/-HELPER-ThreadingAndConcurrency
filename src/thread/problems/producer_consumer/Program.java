@@ -10,7 +10,7 @@ package thread.problems.producer_consumer;
 public class Program {
 
     public static void main(String[] args) {
-        Buffer buffer = new Buffer(100);
+        Buffer buffer = new Buffer(10);
 
         // Create 5 customer that automatically bought products from the buffer
         Consumer c1 = new Consumer(20, buffer);

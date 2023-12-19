@@ -46,7 +46,7 @@ public class Buffer {
                 products.wait();
             }
 
-            Thread.sleep(2000);
+            Thread.sleep(700);
 
             System.out.println(">>>>--------------------------------------------------------");
             System.out.println("Producer " + producerId + " added a product " + product);
@@ -66,14 +66,14 @@ public class Buffer {
      * @param consumerId
      */
     public void removeProduct(int consumerId) throws InterruptedException {
-
         synchronized (products) {
             if (products.isEmpty()) {
                 System.out.println("The storage is empty. Wait to add more ...");
-                notifyAll();
+
+                products.wait();
             }
 
-//            Thread.sleep(1000);
+            Thread.sleep(700);
 
             System.out.println("<<<<-------------------------------------------------------");
             System.out.println("Customer " + consumerId + " bought a product " + products.peek());
@@ -81,8 +81,8 @@ public class Buffer {
             System.out.println("On stock " + products.size() + "/" + capacity);
 
             // After bought a product, a thread goes to the wait set for the next execution
-            if (products.size() == this.capacity - 1) {
-                wait();
+            if (products.size() == 1) {
+                products.notifyAll();
             }
         }
     }

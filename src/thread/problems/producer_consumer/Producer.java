@@ -26,14 +26,10 @@ public class Producer extends Thread {
         int i = 0;
         while (true) {
             try {
-                if (buffer.getCapacity() > buffer.getSize()) {
-                    buffer.addProduct(i++, this.id);
-                    Thread.sleep((long) (Math.random() * 1000));
-                }
+                buffer.addProduct(i++, this.id);
             } catch (InterruptedException ex) {
                 ex.getStackTrace();
             }
         }
-
     }
 }
