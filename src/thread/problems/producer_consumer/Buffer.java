@@ -4,10 +4,7 @@
  */
 package thread.problems.producer_consumer;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * @author duyvu
@@ -18,7 +15,7 @@ public class Buffer {
     // == Fields
     // =============================
     private int capacity;
-    private List<Integer> products;
+    private final Queue<Integer> products;
 
     // =============================
     // == Constructor 
@@ -33,17 +30,34 @@ public class Buffer {
     // =============================
 
     /**
-     * Add products to the list, attached with the product ID
+     * Push product to the queue, attached with the product ID
      *
      * @param product
      * @param producerId
      */
-    public void addProducts(int product,
-                            int producerId) {
-        System.out.println(">>>>--------------------------------------------------------");
-        System.out.println("Producer " + producerId + " added a product " + product);
-        products.add(product);
-        System.out.println("On stock " + products.size() + "/" + capacity);
+    public void addProduct(int product,
+                           int producerId) throws InterruptedException {
+
+        synchronized (products) {
+            if (products.size() == this.capacity) {
+                System.out.println("The storage is full. Stop Producing, waiting ...");
+
+                // if the storage is full, add the thread holding this monitor into wait set
+                products.wait();
+            }
+
+            Thread.sleep(2000);
+
+            System.out.println(">>>>--------------------------------------------------------");
+            System.out.println("Producer " + producerId + " added a product " + product);
+            products.add(product);
+            System.out.println("On stock " + products.size() + "/" + capacity);
+
+            // After added a product, notify all waited threads fighting together for the monitory
+            if (this.products.size() == 1) {
+                products.notifyAll();
+            }
+        }
     }
 
     /**
@@ -51,11 +65,26 @@ public class Buffer {
      *
      * @param consumerId
      */
-    public void removeProduct(int consumerId) {
-        System.out.println("<<<<-------------------------------------------------------");
-        System.out.println("Customer " + consumerId + " bought a product " + products.get(0));
-        products.remove(0);
-        System.out.println("On stock " + products.size() + "/" + capacity);
+    public void removeProduct(int consumerId) throws InterruptedException {
+
+        synchronized (products) {
+            if (products.isEmpty()) {
+                System.out.println("The storage is empty. Wait to add more ...");
+                notifyAll();
+            }
+
+//            Thread.sleep(1000);
+
+            System.out.println("<<<<-------------------------------------------------------");
+            System.out.println("Customer " + consumerId + " bought a product " + products.peek());
+            products.remove();
+            System.out.println("On stock " + products.size() + "/" + capacity);
+
+            // After bought a product, a thread goes to the wait set for the next execution
+            if (products.size() == this.capacity - 1) {
+                wait();
+            }
+        }
     }
 
     // =============================

@@ -31,7 +31,7 @@ public class Consumer extends Thread {
             try {
                 if (buffer.getSize() > 0) {
                     buffer.removeProduct(id);
-                    sleep((long) (Math.random() * 2000));
+                    Thread.sleep((long) (Math.random() * 1000));
                 }
             } catch (InterruptedException ex) {
                 ex.getStackTrace();

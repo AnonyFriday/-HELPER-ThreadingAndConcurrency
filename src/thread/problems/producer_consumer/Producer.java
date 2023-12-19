@@ -6,9 +6,6 @@ package thread.problems.producer_consumer;
 
 import static java.lang.Thread.sleep;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * @author duyvu
  */
@@ -30,7 +27,7 @@ public class Producer extends Thread {
         while (true) {
             try {
                 if (buffer.getCapacity() > buffer.getSize()) {
-                    buffer.addProducts(i++, this.id);
+                    buffer.addProduct(i++, this.id);
                     Thread.sleep((long) (Math.random() * 1000));
                 }
             } catch (InterruptedException ex) {
