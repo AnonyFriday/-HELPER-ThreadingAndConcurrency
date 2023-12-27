@@ -39,14 +39,15 @@ public class Buffer {
                            int producerId) throws InterruptedException {
 
         synchronized (products) {
-            if (products.size() == this.capacity) {
+            while (products.size() == this.capacity) {
                 System.out.println("The storage is full. Stop Producing, waiting ...");
 
                 // if the storage is full, add the thread holding this monitor into wait set
                 products.wait();
             }
 
-            Thread.sleep(700);
+            // Simulate the production time
+            Thread.sleep(200);
 
             System.out.println(">>>>--------------------------------------------------------");
             System.out.println("Producer " + producerId + " added a product " + product);
@@ -54,7 +55,7 @@ public class Buffer {
             System.out.println("On stock " + products.size() + "/" + capacity);
 
             // After added a product, notify all waited threads fighting together for the monitory
-            if (this.products.size() == 1) {
+            if (products.size() == 1) {
                 products.notifyAll();
             }
         }
@@ -67,12 +68,18 @@ public class Buffer {
      */
     public void removeProduct(int consumerId) throws InterruptedException {
         synchronized (products) {
-            if (products.isEmpty()) {
+
+            // Using while instead of when the thread acquire the lock
+            // using while => If accquired, but queue is empty then keep waiting
+            // using if => If accquired, jump out the if statement and remove => deduction will be overflow
+            while (products.isEmpty()) {
                 System.out.println("The storage is empty. Wait to add more ...");
 
                 products.wait();
+                // Thread will be blocked here, and be allocated at waiting set
             }
 
+            // Simulate the consumption time
             Thread.sleep(700);
 
             System.out.println("<<<<-------------------------------------------------------");
