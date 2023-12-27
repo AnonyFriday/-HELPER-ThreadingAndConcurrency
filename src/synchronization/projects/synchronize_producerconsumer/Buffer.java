@@ -47,17 +47,16 @@ public class Buffer {
             }
 
             // Simulate the production time
-            Thread.sleep(200);
+            Thread.sleep(100);
 
             System.out.println(">>>>--------------------------------------------------------");
             System.out.println("Producer " + producerId + " added a product " + product);
             products.add(product);
             System.out.println("On stock " + products.size() + "/" + capacity);
 
+
             // After added a product, notify all waited threads fighting together for the monitory
-            if (products.size() == 1) {
-                products.notifyAll();
-            }
+            products.notifyAll();
         }
     }
 
@@ -80,7 +79,7 @@ public class Buffer {
             }
 
             // Simulate the consumption time
-            Thread.sleep(700);
+            Thread.sleep(100);
 
             System.out.println("<<<<-------------------------------------------------------");
             System.out.println("Customer " + consumerId + " bought a product " + products.peek());
@@ -88,9 +87,7 @@ public class Buffer {
             System.out.println("On stock " + products.size() + "/" + capacity);
 
             // After bought a product, a thread goes to the wait set for the next execution
-            if (products.size() == 1) {
-                products.notifyAll();
-            }
+            products.notifyAll();
         }
     }
 
