@@ -1,4 +1,4 @@
-package synchronization.projects.lock_parallelvectorsum;
+package synchronization.projects.reentrantlock_parallelvectorsum;
 
 
 import java.util.concurrent.locks.Lock;
