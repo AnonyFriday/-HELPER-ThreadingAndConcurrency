@@ -8,7 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * A class implement runnable interfaces and being passed to the Thread constructor later on
+ * A class implement runnable interfaces and being passed to the Thread
+ * constructor later on
  */
 class ThreadRunnable implements Runnable {
 
